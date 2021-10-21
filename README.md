@@ -1,7 +1,7 @@
 Transform a string to its equivalent using unicode fonts:
 
 ```
-unicode-fonts --list
+convert-unicode-fonts list
  * 𝐇𝐄𝐋𝐋𝐎 𝐖𝐎𝐑𝐋𝐃, 𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟔𝟖𝟗 : bold
  * 𝐻𝐸𝐿𝐿𝑂 𝑊𝑂𝑅𝐿𝐷, 01234567689 : italic
  * 𝑯𝑬𝑳𝑳𝑶 𝑾𝑶𝑹𝑳𝑫, 01234567689 : boldItalic
@@ -41,62 +41,58 @@ Some Unicode categories that contain these type of characters are:
 ## Install
 
 ```
-npm i -g unicode-fonts
-```
-
-## CLI
-```
-unicode-fonts --list
-unicode-fonts --font scriptItalic --input "My name is Sebastian Gurin"
-cat package.json | unicode-fonts --font boldItalic
-cat package.json | unicode-fonts --font circled --join "0x3000" --outputFile package-boldItalic.json
+npm i convert-unicode-fonts
+yarn add convert-unicode-fonts
 ```
 
 ## API
 
 ```ts
+import { transform, getFonts, revertTransform } from 'convert-unicode-fonts';
 const fonts = getFonts()
 const s = transform('Hello', fonts['scriptItalic'])
+const normal = revertTransform(s)
 ```
-
-## Options
-
-Both CLI and API supports the same options
-
- * if no `input` is given, then it will read from stdin
- * if no `outputFile` is given then it will write to stdout
- * `font` is required. use `list` to see the available fonts
 
 # Join
 
 The option `join` will join the characters with given character. Take the following examples with different space characters: 
 
-
 ## no join
 ```
-unicode-fonts --input "abcdefXZYUPO91234 hello WORLD" --font circled
-ⒶⒷⒸⒹⒺⒻⓍZⓎⓊⓅⓄ⑨①②③④ ⒽⒺⓁⓁⓄ ⓌⓄⓇⓁⒹ
+import { transform, getFonts } from 'convert-unicode-fonts';
+const fonts = getFonts()
+const s = transform('abcdefXZYUPO91234 hello WORLD', fonts['circled'])
+// ⒶⒷⒸⒹⒺⒻⓍZⓎⓊⓅⓄ⑨①②③④ ⒽⒺⓁⓁⓄ ⓌⓄⓇⓁⒹ
 ```
 ## thin space
 ```
-unicode-font --input "abcdefXZYUPO91234 hello WORLD" --font circled --join "0x2009"
-Ⓐ Ⓑ Ⓒ Ⓓ Ⓔ Ⓕ Ⓧ Z Ⓨ Ⓤ Ⓟ Ⓞ ⑨ ① ② ③ ④   Ⓗ Ⓔ Ⓛ Ⓛ Ⓞ   Ⓦ Ⓞ Ⓡ Ⓛ Ⓓ 
+import { transform, getFonts } from 'convert-unicode-fonts';
+const fonts = getFonts()
+const s = transform('abcdefXZYUPO91234 hello WORLD', fonts['circled'], "0x2009")
+// Ⓐ Ⓑ Ⓒ Ⓓ Ⓔ Ⓕ Ⓧ Z Ⓨ Ⓤ Ⓟ Ⓞ ⑨ ① ② ③ ④   Ⓗ Ⓔ Ⓛ Ⓛ Ⓞ   Ⓦ Ⓞ Ⓡ Ⓛ Ⓓ 
 ```
 ## ideographic space
 ```
-unicode-fonts --input "abcdefXZYUPO91234 hello WORLD" --font circled --join "0x3000" # hair space
+import { transform, getFonts } from 'convert-unicode-fonts';
+const fonts = getFonts()
+const s = transform('abcdefXZYUPO91234 hello WORLD', fonts['circled'], "0x3000") # hair space
 Ⓐ　Ⓑ　Ⓒ　Ⓓ　Ⓔ　Ⓕ　Ⓧ　Z　Ⓨ　Ⓤ　Ⓟ　Ⓞ　⑨　①　②　③　④　 　Ⓗ　Ⓔ　Ⓛ　Ⓛ　Ⓞ　 　Ⓦ　Ⓞ　Ⓡ　Ⓛ　Ⓓ
 ```
 ## zero width space
 ```
-unicode-fonts --input "abcdefXZYUPO91234 hello WORLD" --font circled --join "0x200b"
-Ⓐ​Ⓑ​Ⓒ​Ⓓ​Ⓔ​Ⓕ​Ⓧ​Z​Ⓨ​Ⓤ​Ⓟ​Ⓞ​⑨​①​②​③​④​ ​Ⓗ​Ⓔ​Ⓛ​Ⓛ​Ⓞ​ ​Ⓦ​Ⓞ​Ⓡ​Ⓛ​Ⓓ
+import { transform, getFonts } from 'convert-unicode-fonts';
+const fonts = getFonts()
+const s = transform('abcdefXZYUPO91234 hello WORLD', fonts['circled'], "0x200b") 
+// Ⓐ​Ⓑ​Ⓒ​Ⓓ​Ⓔ​Ⓕ​Ⓧ​Z​Ⓨ​Ⓤ​Ⓟ​Ⓞ​⑨​①​②​③​④​ ​Ⓗ​Ⓔ​Ⓛ​Ⓛ​Ⓞ​ ​Ⓦ​Ⓞ​Ⓡ​Ⓛ​Ⓓ
 ```
 
 ## backspace
 ```
-unicode-fonts  --input "abcdefXZYUPO91234 hello WORLD" --font circled --join "0x0008"
-Ⓓ
+import { transform, getFonts } from 'convert-unicode-fonts';
+const fonts = getFonts()
+const s = transform('abcdefXZYUPO91234 hello WORLD', fonts['circled'], "0x0008") 
+// Ⓓ
 ```
 
 # WARNING
@@ -104,7 +100,3 @@ unicode-fonts  --input "abcdefXZYUPO91234 hello WORLD" --font circled --join "0x
 In general it's a bad idea to use these characters to store text. The only useful situatoin where you would want to store text using these, is if you want to prevent text searches to find a string.
 
 These characters should be only used to render normal text in mediums with limited fonts, like a terminal. 
-
-# TODO
-
-[TODO.md](TODO.md)

@@ -1,20 +1,19 @@
 {
-  "name": "unicode-fonts",
-  "version": "0.0.2",
-  "description": "transform strings to equivalent unicode characters",
+  "name": "convert-unicode-fonts",
+  "version": "1.0.0",
+  "description": "transform strings to equivalent unicode characters, and revert",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
-  "bin": "bin/unicode-fonts.js",
   "scripts": {
     "watch": "tsc --watch",
     "build": " tsc",
-    "test": "npx ts-node node_modules/jasmine/bin/jasmine.js",
+    "test": "npx ts-node spec/test.ts",
     "prepare": "npm run build",
     "prettier": "npx ts-refactor organizeImports \"src/**/*.ts*\" \"spec/**/*.ts*\" --dontAsk && npx prettier  --write --arrow-parens avoid --parser typescript --use-tabs false --no-semi true --single-quote true --tab-width 2 --trailing-comma none --end-of-line lf --prose-wrap preserve --print-width 120  --jsx-bracket-same-line true \"src/**/*.ts*\" \"spec/**/*.ts*\"",
     "clean": "rm -rf dist",
     "all": "npm run clean && npm run prettier && npm run build"
   },
-  "author": "Sebastian Gurin",
+  "author": "Martin Donadieu",
   "license": "MIT",
   "dependencies": {
     "yargs-parser": "^10.1.0"
@@ -30,19 +29,14 @@
     "ts-node": "^7.0.1",
     "typescript": "^3.4.3"
   },
-  "repository": "https://github.com/cancerberoSgx/unicode-fonts",
+  "repository": "https://github.com/riderx/unicode-fonts",
   "keywords": [
-    "monorepo",
-    "multiple packages",
-    "lerna alternative",
-    "lerna",
-    "rush",
-    "rush alternative",
-    "yarn",
-    "workspace",
-    "npm workspace",
-    "yarn workspace",
-    "yarn workspaces",
-    "yarn workspaces alternative"
+    "unicode",
+    "unicode cleaner",
+    "font",
+    "fonts",
+    "convert",
+    "unicode font",
+    "convert unicode"
   ]
 }
